@@ -1,31 +1,24 @@
-import tkinter as tk
-from tkinter import messagebox
+from flask import Flask, render_template
 
+app = Flask(__name__)
+
+
+@app.route('/')
+def jogo_da_velha():
+    return render_template('jogo_da_velha.html')
 
 class JogoDaVelha:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Jogo da Velha")
-
-        # Variáveis para controle
+    def __init__(self):
         self.turn = 'X'
         self.board = ['' for _ in range(9)]
-        self.buttons = [None] * 9
-
-
-        for i in range(9):
-            row, col = divmod(i, 3)
-            self.buttons[i] = tk.Button(root, text='', width=10, height=3, command=lambda i=i: self.click(i))
-            self.buttons[i].grid(row=row, column=col)
 
     def click(self, i):
         if self.board[i] == '' and not self.check_winner():
             self.board[i] = self.turn
-            self.buttons[i]['text'] = self.turn
             if self.check_winner():
-                messagebox.showinfo("Fim do Jogo", f"Jogador {self.turn} venceu!")
+                return f"Jogador {self.turn} venceu!"
             elif all(cell != '' for cell in self.board):
-                messagebox.showinfo("Fim do Jogo", "Empate!")
+                return "Empate!"
             else:
                 self.turn = 'O' if self.turn == 'X' else 'X'
 
@@ -37,8 +30,5 @@ class JogoDaVelha:
                 return True
         return False
 
-
 if __name__ == "__main__":
-    root = tk.Tk()
-    game = JogoDaVelha(root)
-    root.mainloop()
+    app.run()
