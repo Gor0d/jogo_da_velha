@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>jogo da veia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .board {
+            background-color: #333;
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 5px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            color: #333;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cell:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<h1>Jogo da velha</h1>
+<div class="container">
+    <div class="board">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+</div>
+<script>
+    // Variáveis para controle do jogo
+    let turn = 'X';
+    let board = ['', '', '', '', '', '', '', '', ''];
+    const cells = document.querySelectorAll('.cell');
+
+    // Função para manipular o clique em uma célula
+    function cellClick(index) {
+      if (board[index] === '' && !checkWinner()) {
+        board[index] = turn;
+        cells[index].textContent = turn;
+        if (checkWinner()) {
+          alert(`Jogador ${turn} venceu!`);
+        } else if (board.every(cell => cell !== '')) {
+          alert('Empate!');
+        } else {
+          turn = turn === 'X' ? 'O' : 'X';
+        }
+      }
+    }
+
+    // Função para verificar o vencedor
+    function checkWinner() {
+      // Lógica para verificar se há um vencedor
+    }
+
+    // Adicionar um evento de clique a cada célula
+    cells.forEach((cell, index) => {
+      cell.addEventListener('click', () => cellClick(index));
+    });
+</script>
+
+</body>
+</html>
